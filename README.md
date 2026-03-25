@@ -1,59 +1,52 @@
 ## Descrição
 
-Este projeto consiste no desenvolvimento de um microsserviço responsável pelo cadastro, login e autenticação de usuários em uma aplicação de Pokémon.
+Este projeto consiste no desenvolvimento de um microsserviço responsável pelo **cadastro, login e autenticação de usuários** em uma aplicação de Pokémon.
 
-O serviço atuará como um *Authorization Server*, sendo responsável por emitir tokens de acesso que serão utilizados pelas demais APIs do sistema.
+A aplicação atua como **porta de entrada do sistema**, sendo responsável por **emitir tokens de acesso** utilizados pelas demais APIs.
 
 ---
 
 ## Objetivo
 
 - Permitir cadastro de usuários  
-- Realizar autenticação (login)  
+- Realizar login  
 - Emitir tokens de acesso  
-- Integrar com outras APIs da aplicação  
+- Permitir integração com outras aplicações  
 
 ---
 
-## Contexto da Arquitetura
+## Contexto
 
-O sistema segue o modelo baseado em OAuth2, com os seguintes elementos:
+O sistema é composto por múltiplas aplicações que se comunicam entre si.
 
-- *Authorization Server*: autentica e gera tokens  
-- *Resource Server*: APIs que disponibilizam os dados  
-- *Usuário*: quem utiliza a aplicação  
-- *Client*: aplicações que solicitam acesso aos recursos  
+Neste cenário:
+
+- Este serviço é responsável pela **autenticação dos usuários**  
+- As demais APIs utilizam o **token gerado** para liberar acesso aos recursos  
 
 ---
 
 ## Fluxo de Autenticação
 
-Será utilizado o fluxo *Client Credentials*, onde:
-
-1. O client envia suas credenciais  
-2. O servidor valida  
+1. O usuário realiza login  
+2. O sistema valida as credenciais  
 3. Um token de acesso é gerado  
-4. O token é usado para acessar outras APIs  
+4. O token é utilizado para acessar outras aplicações  
 
 ---
 
 ## Casos de Uso
 
-*Usuário*
+**Usuário**
 - Cadastrar conta  
 - Fazer login  
 
-*Client*
-- Solicitar token  
-- Validar token  
-
-*Administrador*
-- Registrar client  
+**Sistema**
+- Gerar token de acesso  
+- Validar credenciais  
 
 ---
-![use-case](https://github.com/user-attachments/assets/69837680-3d0c-4f1e-9fc2-0e2cadda4c6d)
-
 
 ## Observação
 
-Este projeto é uma versão inicial e simplificada, com foco em modelagem conceitual para uma arquitetura de microsserviços.
+Este projeto representa uma versão **simplificada**, com foco na **modelagem conceitual da arquitetura**.

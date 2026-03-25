@@ -1,0 +1,43 @@
+<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36" version="29.6.6">
+  <diagram name="Page-1" id="junO7Y8rRCbXWPyCQciS">
+    <mxGraphModel dx="662" dy="635" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="opiCuCjEbIhbLN9dYyso-6" parent="1" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=26;fillColor=none;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" value="User" vertex="1">
+          <mxGeometry height="100" width="140" x="250" y="395" as="geometry" />
+        </mxCell>
+        <mxCell id="opiCuCjEbIhbLN9dYyso-7" parent="opiCuCjEbIhbLN9dYyso-6" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" value="&lt;div&gt;- id: Long&lt;/div&gt;- nickname: String&lt;div&gt;- email: String&lt;/div&gt;&lt;div&gt;- password: String&lt;/div&gt;" vertex="1">
+          <mxGeometry height="74" width="140" y="26" as="geometry" />
+        </mxCell>
+        <mxCell id="opiCuCjEbIhbLN9dYyso-18" parent="1" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=26;fillColor=none;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" value="Token" vertex="1">
+          <mxGeometry height="70" width="140" x="480" y="395" as="geometry" />
+        </mxCell>
+        <mxCell id="opiCuCjEbIhbLN9dYyso-19" parent="opiCuCjEbIhbLN9dYyso-18" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" value="&lt;div&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;- value: String&lt;/span&gt;&lt;/div&gt;&lt;div&gt;- expiration: DateTime&lt;/div&gt;" vertex="1">
+          <mxGeometry height="44" width="140" y="26" as="geometry" />
+        </mxCell>
+        <mxCell id="opiCuCjEbIhbLN9dYyso-25" edge="1" parent="1" source="opiCuCjEbIhbLN9dYyso-20" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="opiCuCjEbIhbLN9dYyso-22">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="opiCuCjEbIhbLN9dYyso-20" parent="1" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=26;fillColor=none;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" value="AuthController" vertex="1">
+          <mxGeometry height="70" width="140" x="370" y="140" as="geometry" />
+        </mxCell>
+        <mxCell id="opiCuCjEbIhbLN9dYyso-21" parent="opiCuCjEbIhbLN9dYyso-20" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" value="&lt;div&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;+ register(): void&lt;/span&gt;&lt;/div&gt;&lt;div&gt;+ login: Token&lt;/div&gt;" vertex="1">
+          <mxGeometry height="44" width="140" y="26" as="geometry" />
+        </mxCell>
+        <mxCell id="opiCuCjEbIhbLN9dYyso-26" edge="1" parent="1" source="opiCuCjEbIhbLN9dYyso-23" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.75;entryY=0;entryDx=0;entryDy=0;exitX=0.497;exitY=0.998;exitDx=0;exitDy=0;exitPerimeter=0;" target="opiCuCjEbIhbLN9dYyso-6">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="opiCuCjEbIhbLN9dYyso-22" parent="1" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=26;fillColor=none;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" value="AuthService" vertex="1">
+          <mxGeometry height="70" width="250" x="315" y="270" as="geometry" />
+        </mxCell>
+        <mxCell id="opiCuCjEbIhbLN9dYyso-23" parent="opiCuCjEbIhbLN9dYyso-22" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" value="&lt;div&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;+ registerUser(user: User): void&lt;/span&gt;&lt;/div&gt;&lt;div&gt;+ authenticateUser(email, password): Token&lt;/div&gt;" vertex="1">
+          <mxGeometry height="44" width="250" y="26" as="geometry" />
+        </mxCell>
+        <mxCell id="opiCuCjEbIhbLN9dYyso-27" edge="1" parent="1" source="opiCuCjEbIhbLN9dYyso-23" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.352;entryY=-0.014;entryDx=0;entryDy=0;entryPerimeter=0;exitX=0.5;exitY=0.998;exitDx=0;exitDy=0;exitPerimeter=0;" target="opiCuCjEbIhbLN9dYyso-18">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

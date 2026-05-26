@@ -45,8 +45,105 @@ Neste cenário:
 - Gerar token de acesso  
 - Validar credenciais  
 
+
 ---
 
-## Observação
+## Tecnologias Utilizadas
 
-Este projeto representa uma versão **simplificada**, com foco na **modelagem conceitual da arquitetura**.
+- Java
+- Spring Boot
+- Spring Security
+- Spring Data JPA
+- PostgreSQL
+- Docker
+- JWT
+- Maven
+
+---
+
+## Como Rodar o Banco de Dados Localmente
+
+### Pré-requisitos
+
+- Docker instalado na máquina
+
+---
+
+### 1. Verificar se a porta `5432` está livre
+
+#### PowerShell
+
+```powershell
+netstat -ano | findstr :5432
+```
+
+#### Bash
+
+```bash
+lsof -i :5432
+```
+
+ou
+
+```bash
+ss -tulnp | grep 5432
+```
+
+Caso a porta esteja ocupada, altere a porta do PostgreSQL nos arquivos:
+
+- `docker-compose.yaml`
+- `application-dev.yaml`
+
+---
+
+### 2. Subir o banco de dados
+
+Execute os comandos **dentro do diretório `auth-service`**.
+
+#### Subir o PostgreSQL 16
+
+```bash
+docker-compose up -d
+```
+
+#### Encerrar o PostgreSQL 16
+
+```bash
+docker-compose down
+```
+
+#### Encerrar e remover todos os dados do banco
+
+```bash
+docker-compose down -v
+```
+
+---
+
+### Acessar o PostgreSQL via terminal (`psql`)
+
+```bash
+docker exec -it auth-service-postgres psql -U postgres -d auth_service
+```
+
+### Sair do `psql`
+
+```sql
+\q
+```
+
+---
+
+## Possível Fluxo de Integração com Outras APIs
+
+```text
+Usuário
+   ↓
+Auth Service (Login)
+   ↓
+JWT Token
+   ↓
+Demais APIs validam o token
+   ↓
+Acesso liberado aos recursos conforme role (permissão)
+```

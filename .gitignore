@@ -43,3 +43,7 @@ logs/
 # OS files
 .DS_Store
 Thumbs.db
+
+# Dev Environment Files
+application.yaml
+docker-compose.yaml

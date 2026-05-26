@@ -2,6 +2,7 @@ package com.inatel.auth_service.entity;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -23,8 +24,8 @@ import jakarta.persistence.Column;
 public class User {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private UUID id;
 
     @Column(nullable = false, unique = true, length = 50) 
     private String username;
@@ -42,7 +43,7 @@ public class User {
     private String role;
 
     @Column(nullable = false)
-    private Boolean banido = false;
+    private Boolean banned;
 
     @CreatedDate // O Spring preenche automaticamente no primeiro INSERT
     @Column(name = "created_at", updatable = false) 

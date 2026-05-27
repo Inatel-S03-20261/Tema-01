@@ -1,5 +1,6 @@
 package com.inatel.auth_service.controller;
 
+import com.inatel.auth_service.dto.UserRegisterDTO;
 import com.inatel.auth_service.entity.User;
 import com.inatel.auth_service.mapper.UserMapper;
 import com.inatel.auth_service.service.UserService;

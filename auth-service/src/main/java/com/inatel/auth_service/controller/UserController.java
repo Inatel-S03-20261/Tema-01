@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 public class UserController {
 
     @PostMapping
-    public ResponseEntity<String> cadastrarUsuario(@RequestBody Object request) {
+    public ResponseEntity<String> registerUser(@RequestBody UserRegisterDTO dto) {
         return ResponseEntity.ok("Endpoint para cadastrar usuário");
     }
 

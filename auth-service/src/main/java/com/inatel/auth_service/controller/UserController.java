@@ -1,15 +1,26 @@
 package com.inatel.auth_service.controller;
 
+import com.inatel.auth_service.entity.User;
+import com.inatel.auth_service.mapper.UserMapper;
+import com.inatel.auth_service.service.UserService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/users")
+@RequiredArgsConstructor
 public class UserController {
 
+    private final UserMapper userMapper;
+    private final UserService service;
+
     @PostMapping
-    public ResponseEntity<String> registerUser(@RequestBody UserRegisterDTO dto) {
-        return ResponseEntity.ok("Endpoint para cadastrar usuário");
+    @ResponseStatus(HttpStatus.CREATED)
+    public void registerUser(@RequestBody UserRegisterDTO dto) {
+        User newUser = userMapper.toEntity(dto);
+        service.register(newUser);
     }
 
     @GetMapping

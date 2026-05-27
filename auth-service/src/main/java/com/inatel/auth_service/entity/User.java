@@ -18,7 +18,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Column;
 
 @Entity
-@Data 
+@Data
 @Table(name = "users") 
 @EntityListeners(AuditingEntityListener.class)
 public class User {
@@ -40,7 +40,7 @@ public class User {
     private LocalDate dob;
 
     @Column(nullable = false, length = 20)
-    private String role;
+    private Role role;
 
     @Column(nullable = false)
     private Boolean banned;

@@ -19,7 +19,7 @@ public class UserController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public void registerUser(@RequestBody UserRegisterDTO dto) {
+    public void register(@RequestBody UserRegisterDTO dto) {
         User newUser = userMapper.toEntity(dto);
         service.register(newUser);
     }

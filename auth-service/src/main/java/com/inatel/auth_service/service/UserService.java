@@ -16,6 +16,7 @@ public class UserService {
         // Encode user password
         // Set 'role' as PLAYER
         // Set 'banned' as false
+        // SQS
         repository.save(user);
     }
 }

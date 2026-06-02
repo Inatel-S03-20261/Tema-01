@@ -36,7 +36,7 @@ public class User {
     @Column(nullable = false)
     private String password;
 
-    @Column(name = "date_of_birth")
+    @Column(name = "date_of_birth", nullable = false)
     private LocalDate dob;
 
     @Column(nullable = false, length = 20)

@@ -5,6 +5,8 @@ import com.inatel.auth_service.entity.User;
 import com.inatel.auth_service.mapper.UserMapper;
 import com.inatel.auth_service.service.UserService;
 import lombok.RequiredArgsConstructor;
+import java.util.UUID;
+import java.util.List;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -25,25 +27,26 @@ public class UserController {
     }
 
     @GetMapping
-    public ResponseEntity<String> listarUsuarios() {
-        return ResponseEntity.ok("Endpoint para listar usuários");
+    public ResponseEntity<List<User>> listarUsuarios() {
+        return ResponseEntity.ok(service.listarUsuarios());
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<String> buscarUsuarioPorId(@PathVariable Long id) {
-        return ResponseEntity.ok("Endpoint para buscar usuário por ID: " + id);
+    public ResponseEntity<User> buscarUsuarioPorId(@PathVariable UUID id) {
+        return ResponseEntity.ok(service.findById(id));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<String> atualizarUsuario(
-            @PathVariable Long id,
-            @RequestBody Object request
+    public ResponseEntity<User> atualizarUsuario(
+            @PathVariable UUID id,
+            @RequestBody User request
     ) {
-        return ResponseEntity.ok("Endpoint para atualizar usuário por ID: " + id);
+        return ResponseEntity.ok(service.atualizarUsuario(id, request));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deletarUsuario(@PathVariable Long id) {
+    public ResponseEntity<Void> deletarUsuario(@PathVariable UUID id) {
+        service.deletarUsuario(id);
         return ResponseEntity.noContent().build();
     }
 }

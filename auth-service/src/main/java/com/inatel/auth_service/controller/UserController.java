@@ -8,8 +8,6 @@ import com.inatel.auth_service.mapper.UserMapper;
 import com.inatel.auth_service.service.UserService;
 import com.inatel.auth_service.validator.PasswordMatchValidator;
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

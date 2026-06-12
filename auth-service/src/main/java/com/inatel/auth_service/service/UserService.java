@@ -6,12 +6,12 @@ import com.inatel.auth_service.event.UserCreatedEvent;
 import com.inatel.auth_service.exception.UserNotFoundException;
 import com.inatel.auth_service.repository.UserRepository;
 import com.inatel.auth_service.validator.UserValidator;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.time.Instant;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -25,6 +25,7 @@ public class UserService {
     private final UserValidator validator;
     private final ApplicationEventPublisher events;
 
+    @Transactional
     public User register(User user) {
         validator.validate(user);
         user.setPassword(encoder.encode(user.getPassword()));
@@ -33,7 +34,7 @@ public class UserService {
         User saved = repository.save(user);
 
         events.publishEvent(UserCreatedEvent.from(saved));
-        return repository.save(saved);
+        return saved;
     }
 
     public void updateCredentials(User user) {

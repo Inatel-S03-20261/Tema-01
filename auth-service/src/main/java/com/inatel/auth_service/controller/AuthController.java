@@ -30,10 +30,10 @@ public class AuthController {
         Optional<User> userOptional = userService.findByUsernameOrEmail(dto.usernameOrEmail());
         if (userOptional.isPresent()) {
             User user = userOptional.get();
-            if (passwordEncoder.matches(dto.password(), user.getPassword())){
-                String token = jwtService.generateToken("");
+            if (passwordEncoder.matches(dto.password(), user.getPassword())) {
+                String token = jwtService.generateToken(user.getUsername());
                 String type = "Bearer";
-                long expiresIn = 1L;
+                long expiresIn = jwtService.parseToken(token).getExpiration().getTime();
 
                 return ResponseEntity.ok(new TokenResponseDTO(token, type, expiresIn));
             }

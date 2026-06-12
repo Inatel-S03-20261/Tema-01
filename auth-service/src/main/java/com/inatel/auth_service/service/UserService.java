@@ -1,67 +1,59 @@
 package com.inatel.auth_service.service;
 
 import com.inatel.auth_service.entity.User;
+import com.inatel.auth_service.exception.UserNotFoundException;
 import com.inatel.auth_service.repository.UserRepository;
+import com.inatel.auth_service.validator.UserValidator;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
 public class UserService {
 
-    private final UserRepository userRepository;
-    private final PasswordEncoder passwordEncoder;
+    private final UserRepository repository;
+    private final PasswordEncoder encoder;
+    private final UserValidator validator;
 
-    public User register(User new_user) {
+    public User register(User user) {
+        validator.validate(user);
+        user.setPassword(encoder.encode(user.getPassword()));
+        User saved = repository.save(user);
 
-        if (userRepository.existsByEmail(new_user.getEmail())) {
-            throw new RuntimeException("Email já cadastrado");
+        return repository.save(saved);
+    }
+
+    public void updateCredentials(User user) {
+        validator.validate(user);
+        repository.save(user);
+    }
+
+    public User findById(UUID id) {
+        Optional<User> userOptional = repository.findById(id);
+        if (userOptional.isEmpty()) {
+            throw new UserNotFoundException("User not found");
         }
-        User user = User.builder()
-                .name(new_user.getName())
-                .email(new_user.getEmail())
-                .password(
-                        passwordEncoder.encode(request.getPassword())
-                )
-                .build();
-
-        return userRepository.save(user);
+        return userOptional.get();
     }
 
-    public User findByEmail(String email) {
-
-        return userRepository.findByEmail(email)
-                .orElseThrow(() ->
-                        new RuntimeException("Usuário não encontrado"));
+    public Optional<User> findByUsernameOrEmail(String usernameOrEmail) {
+        return repository.findByUsernameOrEmail(usernameOrEmail, usernameOrEmail);
     }
 
-    public User findById(Long id) {
-        return userRepository.findById(id)
-                .orElseThrow(() ->
-                        new RuntimeException("Usuário não encontrado"));
+    public List<User> findAll() {
+        return repository.findAll();
     }
 
-    public User atualizarUsuario(Long id, User dadosAtualizados) {
-
-        User user = userRepository.findById(id)
-                .orElseThrow(() ->
-                        new RuntimeException("Usuário não encontrado"));
-
-        user.setName(dadosAtualizados.getName());
-
-        user.setEmail(dadosAtualizados.getEmail());
-
-        return userRepository.save(user);
-    }
-
-    public List<User> listarUsuarios(){
-        // Lógica para listar os usuários
-        return userRepository.findAll();
-    }
-    public void deletarUsuario(Long id){
-        if(!userRepository.existsById(id)){
-            throw new RuntimeException
+    public void deleteById(UUID id) {
+        Optional<User> userOptional = repository.findById(id);
+        if (userOptional.isEmpty()) {
+            throw new UserNotFoundException("User not found");
         }
-        userRepository.deleteById(id);
+        repository.deleteById(id);
     }
 }

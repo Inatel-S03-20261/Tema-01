@@ -14,3 +14,7 @@ spring:
     properties:
       hibernate:
         format_sql: false
+mqtt:
+  broker-url: tcp://broker.hivemq.com:1883
+  client-id: auth-service
+  user-created-topic: users/created

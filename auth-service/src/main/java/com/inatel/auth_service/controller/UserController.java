@@ -1,11 +1,14 @@
 package com.inatel.auth_service.controller;
 
+import com.inatel.auth_service.dto.BanStatusDTO;
 import com.inatel.auth_service.dto.UserRegisterDTO;
 import com.inatel.auth_service.dto.UserUpdateDTO;
 import com.inatel.auth_service.entity.User;
 import com.inatel.auth_service.mapper.UserMapper;
 import com.inatel.auth_service.service.UserService;
 import com.inatel.auth_service.validator.PasswordMatchValidator;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -64,11 +67,12 @@ public class UserController {
     @PutMapping("/{id}/ban")
     public ResponseEntity<Void> updateBannedStatus(
             @PathVariable String id,
-            @RequestBody @NotNull boolean status) {
+            @RequestBody @Valid BanStatusDTO dto) {
         var userId = UUID.fromString(id);
         User user = service.findById(userId);
 
-        user.setBanned(status);
+        user.setBanned(dto.banned());
+        service.updateBannedStatus(user);
 
         return ResponseEntity.noContent().build();
     }

@@ -1,6 +1,6 @@
 package com.inatel.auth_service.dto;
 
-public record TokenResponseDTO(
+public record TokenDTO(
         String token,
         String type,
         long expiresIn

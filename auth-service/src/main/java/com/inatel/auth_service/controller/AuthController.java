@@ -1,10 +1,11 @@
 package com.inatel.auth_service.controller;
 
 import com.inatel.auth_service.dto.LoginRequestDTO;
-import com.inatel.auth_service.dto.TokenResponseDTO;
+import com.inatel.auth_service.dto.TokenDTO;
 import com.inatel.auth_service.entity.User;
 import com.inatel.auth_service.service.JwtService;
 import com.inatel.auth_service.service.UserService;
+import io.jsonwebtoken.Claims;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,7 +27,7 @@ public class AuthController {
     private final PasswordEncoder passwordEncoder;
 
     @PostMapping("login")
-    public ResponseEntity<TokenResponseDTO> login(@RequestBody LoginRequestDTO dto) {
+    public ResponseEntity<TokenDTO> login(@RequestBody LoginRequestDTO dto) {
         Optional<User> userOptional = userService.findByUsernameOrEmail(dto.usernameOrEmail());
         if (userOptional.isPresent()) {
             User user = userOptional.get();
@@ -35,10 +36,17 @@ public class AuthController {
                 String type = "Bearer";
                 long expiresIn = jwtService.parseToken(token).getExpiration().getTime();
 
-                return ResponseEntity.ok(new TokenResponseDTO(token, type, expiresIn));
+                return ResponseEntity.ok(new TokenDTO(token, type, expiresIn));
             }
         }
         // Bad credentials
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+    }
+
+    @PostMapping("validate")
+    public ResponseEntity<Claims> validateToken(@RequestBody TokenDTO dto) {
+        Claims claims = jwtService.parseToken(dto.token());
+        System.out.println(claims.getIssuedAt());
+        return new ResponseEntity<>(claims, HttpStatus.OK);
     }
 }

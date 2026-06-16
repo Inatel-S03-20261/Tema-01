@@ -1,17 +1,27 @@
+# Auth Service - Microsserviço de Autenticação e Autorização
+
 ## Descrição
 
-Este projeto consiste no desenvolvimento de um microsserviço responsável pelo **cadastro, login e autenticação de usuários** em uma aplicação de Pokémon.
+O **Auth Service** é um microsserviço responsável pelo gerenciamento da autenticação e autorização dos usuários da aplicação.
 
-A aplicação atua como **porta de entrada do sistema**, sendo responsável por **emitir tokens de acesso** utilizados pelas demais APIs.
+Sua principal função é atuar como porta de entrada para o sistema, realizando:
+
+- Cadastro de usuários;
+- Login; 
+- Validação de credenciais;
+- Emissão de tokens JWT;
+- Integração com outras APIs do ecossistema.
+
+As demais aplicações utilizam o token gerado por este serviço para controlar o acesso aos recursos protegidos.
 
 ---
+## Objetivos
 
-## Objetivo
-
-- Permitir cadastro de usuários  
-- Realizar login  
-- Emitir tokens de acesso  
-- Permitir integração com outras aplicações  
+- Centralizar o processo de autenticação;
+- Garantir a segurança das aplicações do sistema;
+- Fornecer uma API independente para emissão e validação de tokens;
+- Permitir integração com outros microsserviços;
+- Facilitar futuras expansões da arquitetura.
 
 ---
 
@@ -35,28 +45,15 @@ Neste cenário:
 
 ---
 
-## Casos de Uso
-
-**Usuário**
-- Cadastrar conta  
-- Fazer login  
-
-**Sistema**
-- Gerar token de acesso  
-- Validar credenciais  
-
-
----
-
 ## Tecnologias Utilizadas
 
-- Java
+- Java 21
 - Spring Boot
 - Spring Security
 - Spring Data JPA
 - PostgreSQL
-- Docker
 - JWT
+- Docker
 - Maven
 
 ---
@@ -137,13 +134,19 @@ docker exec -it auth-service-postgres psql -U postgres -d auth_service
 ## Possível Fluxo de Integração com Outras APIs
 
 ```text
-Usuário
+Jogador
    ↓
+Cliente
+   ↓ 
 Auth Service (Login)
    ↓
 JWT Token
    ↓
-Demais APIs validam o token
+Demais Clientes validam o token
    ↓
-Acesso liberado aos recursos conforme role (permissão)
+Acesso liberado aos recursos conforme permissão
 ```
+
+[Primeira versão](docs/doc1.md)
+[Segunda versão](docs/doc2.md)
+[Terceira versão](docs/doc3.md)

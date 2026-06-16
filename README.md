@@ -131,6 +131,10 @@ docker exec -it auth-service-postgres psql -U postgres -d auth_service
 
 ---
 
+## Swagger / OpenAPI
+
+/swagger-ui/index.html#/
+
 ## Possível Fluxo de Integração com Outras APIs
 
 ```text

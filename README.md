@@ -150,3 +150,16 @@ Acesso liberado aos recursos conforme permissão
 [Primeira versão](docs/doc1.md)
 [Segunda versão](docs/doc2.md)
 [Terceira versão](docs/doc3.md)
+
+
+## Vídeo sobre Design Patterns
+
+Neste vídeo, apresentamos uma explicação simples dos principais **Design Patterns** aplicados no projeto, mostrando como eles ajudam na organização do código, na separação de responsabilidades e na manutenção da aplicação.
+
+Foram abordados padrões como:
+
+- Repository Pattern;
+- DTO Pattern;
+- Mapper Pattern com MapStruct.
+
+[![Assista ao vídeo sobre Design Patterns](https://img.youtube.com/vi/jN6hGeDHAOA/0.jpg)](https://www.youtube.com/watch?v=jN6hGeDHAOA)

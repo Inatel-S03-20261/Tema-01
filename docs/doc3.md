@@ -1,171 +1,168 @@
-# Arquitetura e padrões de projeto
+# Design Patterns Aplicados no Projeto
 
-# Arquitetura do Sistema
+# Repository Pattern
 
-O serviço segue uma arquitetura em camadas, visando maior organização, desacoplamento e facilidade de manutenção.
+## O que é Repository Pattern?
 
-```text
-Cliente
-    ↓
-Controller
-    ↓
-Facade
-    ↓
-Service
-    ↓
-Repository
-    ↓
-PostgreSQL
-```
+O Repository Pattern é um padrão de projeto responsável por abstrair a camada de persistência, separando a lógica de negócio da lógica de acesso ao banco de dados.
+
+No projeto, esse padrão é implementado através do **Spring Data JPA**, que fornece uma camada de abstração para operações CRUD e consultas customizadas.
 
 ---
 
-# Fluxo de Autenticação
+## Por que utilizamos?
 
-```text
-Usuário
-    ↓
-POST /auth/login
-    ↓
-AuthController
-    ↓
-AuthFacade
-    ↓
-AuthService
-    ↓
-UserRepository
-    ↓
-PostgreSQL
-
-Credenciais válidas
-    ↓
-JwtAuthenticationStrategy
-    ↓
-Token JWT
-    ↓
-Usuário
-
-Demais APIs
-    ↓
-Recebem o token
-    ↓
-Validam o JWT
-    ↓
-Liberam acesso aos recursos
-```
+* Separação entre regra de negócio e persistência;
+* Centralização do acesso aos dados;
+* Facilidade para testes;
+* Baixo acoplamento;
+* Integração transparente com o JPA.
 
 ---
 
-# Estrutura do Projeto
-
-```text
-src
-└── main
-    └── java
-        └── br.com.authservice
-            ├── controllers
-            ├── dto
-            ├── entities
-            ├── repositories
-            ├── services
-            ├── facades
-            ├── factories
-            ├── strategies
-            ├── security
-            ├── config
-            ├── exceptions
-            └── utils
-```
-
----
-
-# Padrões de Projeto Utilizados
-
-## Repository Pattern
-
-Responsável pela abstração da camada de acesso aos dados.
-
-### Benefícios
-
-* Centralização das operações de persistência;
-* Maior desacoplamento;
-* Melhor testabilidade;
-* Facilidade para troca de banco de dados.
-
-### Exemplo
+## Implementação
 
 ```java
-public interface UserRepository extends JpaRepository<User, Long> {
+@Repository
+public interface UserRepository extends JpaRepository<User, UUID> {
 
-    Optional<User> findByEmail(String email);
-
-    boolean existsByEmail(String email);
+    Optional<User> findByUsernameOrEmail(
+            String username,
+            String email);
 
 }
 ```
 
 ---
 
-## Factory Method Pattern
+## Como aparece na arquitetura
 
-Utilizado para encapsular a criação de objetos do domínio.
+```text
+Cliente
+     ↓
+Controller
+     ↓
+Service
+     ↓
+UserRepository
+     ↓
+PostgreSQL
+```
 
-### Benefícios
+---
 
-* Centraliza a criação das entidades;
-* Reduz duplicação de código;
-* Facilita futuras alterações.
+## Fluxo de Dados
 
-### Exemplo
+1. O Controller recebe a requisição HTTP;
+2. O Service processa a regra de negócio;
+3. O Repository realiza a consulta no banco de dados;
+4. O resultado retorna para o Service;
+5. O Controller retorna a resposta ao cliente.
+
+---
+
+## Benefícios
+
+* Centralização do acesso aos dados;
+* Facilidade para testes unitários;
+* Menor acoplamento;
+* Maior manutenibilidade;
+* Integração transparente com Spring Data JPA.
+
+---
+
+# DTO Pattern
+
+## O que é?
+
+DTO (Data Transfer Object) é um padrão utilizado para transportar dados entre as camadas da aplicação.
+
+Seu objetivo é evitar que as entidades do domínio sejam expostas diretamente ao cliente.
+
+---
+
+## Por que utilizamos?
+
+* Desacoplamento entre API e entidades;
+* Segurança dos dados expostos;
+* Melhor organização;
+* Facilidade para evolução da aplicação.
+
+---
+
+## Fluxo
+
+```text
+Request HTTP
+      ↓
+DTO
+      ↓
+Service
+      ↓
+Entity
+```
+
+---
+
+## Benefícios
+
+* Desacoplamento;
+* Segurança;
+* Facilidade de manutenção;
+* Independência das entidades do banco;
+* Maior controle sobre os dados trafegados.
+
+---
+
+# Mapper Pattern
+
+## O que é?
+
+O Mapper Pattern é responsável pela conversão entre diferentes representações de objetos.
+
+No projeto, utiliza-se o **MapStruct**, responsável por converter DTOs em entidades e vice-versa.
+
+---
+
+## Por que utilizamos?
+
+* Evitar código repetitivo;
+* Centralizar as conversões;
+* Facilitar a manutenção;
+* Melhorar a legibilidade.
+
+---
+
+## Implementação
 
 ```java
-User user = UserFactory.create(
-    username,
-    email,
-    encryptedPassword
-);
+@Mapper(componentModel = "spring")
+public interface UserMapper {
+
+    User toEntity(UserRegisterDTO dto);
+
+}
 ```
 
 ---
 
-## Strategy Pattern
-
-Permite a utilização de diferentes estratégias de autenticação.
-
-### Benefícios
-
-* Flexibilidade;
-* Fácil extensão;
-* Baixo acoplamento.
-
-### Estrutura
+## Fluxo
 
 ```text
-AuthenticationStrategy
-        │
-        ├── JwtAuthenticationStrategy
-        ├── ApiKeyAuthenticationStrategy
-        └── OAuthAuthenticationStrategy
+UserRegisterDTO
+       ↓
+UserMapper
+       ↓
+User Entity
 ```
 
 ---
 
-## Facade Pattern
+## Benefícios
 
-Responsável por simplificar a comunicação entre os controladores e os serviços.
+* Redução de código boilerplate;
+* Conversões centralizadas;
+* Maior legibilidade;
+* Facilidade para manutenção.
 
-### Benefícios
-
-* Redução da complexidade;
-* Melhor organização;
-* Maior legibilidade.
-
-### Estrutura
-
-```text
-AuthController
-       ↓
-AuthFacade
-       ↓
-AuthService
-```
+---

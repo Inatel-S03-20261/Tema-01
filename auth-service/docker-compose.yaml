@@ -1,4 +1,35 @@
+#services:
+#  postgres:
+#    image: postgres:16
+#    container_name: auth-service-postgres
+#    environment:
+#      POSTGRES_DB: auth_service
+#      POSTGRES_USER: postgres
+#      POSTGRES_PASSWORD: postgres
+#    ports:
+#      - "5433:5432" # {LOCAL_PORT}/{CONTAINER_PORT}
+#    volumes:
+#      - postgres_data:/var/lib/postgresql/data
+#
+#volumes:
+#  postgres_data:
+
 services:
+  auth-service:
+    build: .
+    container_name: auth-service-app
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/auth_service
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: postgres
+      # MQTT works as-is against public HiveMQ; override only if you run a local broker:
+      # MQTT_BROKER_URL: tcp://broker:1883
+    ports:
+      - "8080:8080"
+
   postgres:
     image: postgres:16
     container_name: auth-service-postgres
@@ -10,6 +41,11 @@ services:
       - "5433:5432" # {LOCAL_PORT}/{CONTAINER_PORT}
     volumes:
       - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d auth_service"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
 
 volumes:
   postgres_data:

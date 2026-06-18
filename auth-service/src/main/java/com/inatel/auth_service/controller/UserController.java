@@ -1,6 +1,7 @@
 package com.inatel.auth_service.controller;
 
 import com.inatel.auth_service.dto.BanStatusDTO;
+import com.inatel.auth_service.dto.RoleUpdateDTO;
 import com.inatel.auth_service.dto.UserRegisterDTO;
 import com.inatel.auth_service.dto.UserUpdateDTO;
 import com.inatel.auth_service.entity.User;
@@ -71,6 +72,19 @@ public class UserController {
 
         user.setBanned(dto.banned());
         service.updateBannedStatus(user);
+
+        return ResponseEntity.noContent().build();
+    }
+
+    @PutMapping("/{id}/role")
+    public ResponseEntity<Void> updateUserRole(
+            @PathVariable String id,
+            @RequestBody @Valid RoleUpdateDTO dto) {
+        var userId = UUID.fromString(id);
+        User user = service.findById(userId);
+
+        user.setRole(dto.role());
+        service.updateUserRole(user);
 
         return ResponseEntity.noContent().build();
     }

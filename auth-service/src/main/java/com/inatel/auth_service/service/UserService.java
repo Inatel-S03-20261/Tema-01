@@ -75,4 +75,8 @@ public class UserService {
         User user = repository.findByUsernameOrEmail(username, username).get();
         return user.getRole();
     }
+
+    public void updateUserRole(User user) {
+        repository.save(user);
+    }
 }

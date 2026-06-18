@@ -70,4 +70,9 @@ public class UserService {
         }
         repository.deleteById(id);
     }
+
+    public Role getRole(String username) {
+        User user = repository.findByUsernameOrEmail(username, username).get();
+        return user.getRole();
+    }
 }

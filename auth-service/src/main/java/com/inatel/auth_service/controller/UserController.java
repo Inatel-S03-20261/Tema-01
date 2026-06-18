@@ -12,6 +12,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -34,12 +35,14 @@ public class UserController {
     }
 
     @GetMapping
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<List<User>> findAll() {
         List<User> users = service.findAll();
         return new ResponseEntity<>(users, HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<User> findById(@PathVariable String id) {
         var userId = UUID.fromString(id);
         User user = service.findById(userId);
@@ -64,6 +67,7 @@ public class UserController {
     }
 
     @PutMapping("/{id}/ban")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Void> updateBannedStatus(
             @PathVariable String id,
             @RequestBody @Valid BanStatusDTO dto) {
@@ -77,6 +81,7 @@ public class UserController {
     }
 
     @PutMapping("/{id}/role")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Void> updateUserRole(
             @PathVariable String id,
             @RequestBody @Valid RoleUpdateDTO dto) {
@@ -90,6 +95,7 @@ public class UserController {
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Void> deleteById(@PathVariable String id) {
         var userId = UUID.fromString(id);
         service.deleteById(userId);

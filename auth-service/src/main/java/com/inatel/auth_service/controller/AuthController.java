@@ -45,8 +45,27 @@ public class AuthController {
 
     @PostMapping("validate")
     public ResponseEntity<Claims> validateToken(@RequestBody TokenDTO dto) {
-        Claims claims = jwtService.parseToken(dto.token());
-        System.out.println(claims.getIssuedAt());
+        Claims claims = null;
+        try {
+            claims = jwtService.parseToken(dto.token());
+        } catch(Exception e) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
         return new ResponseEntity<>(claims, HttpStatus.OK);
+    }
+
+    @PostMapping("refresh")
+    public ResponseEntity<TokenDTO> refreshToken(@RequestBody TokenDTO dto) {
+        Claims claims = null;
+        try {
+            claims = jwtService.parseToken(dto.token());
+        } catch(Exception e) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+        String token = jwtService.generateToken(claims.getSubject());
+        String type = "Bearer";
+        long expiresIn = jwtService.parseToken(token).getExpiration().getTime();
+
+        return ResponseEntity.ok(new TokenDTO(token, type, expiresIn));
     }
 }

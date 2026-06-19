@@ -235,6 +235,18 @@ docker compose down -v
 
 > ⚠️ A flag `-v` **apaga todos os dados do banco**. Use apenas quando quiser intencionalmente começar do zero. Sem o `-v`, o `docker compose down` preserva os seus dados.
 
+## Broker
+
+Sempre que um usuário for criado via POST request, uma mensagem será publicada no broker: https://www.hivemq.com/demos/websocket-client/
+Config do client
+HOST: broker.hivemq.com
+PORT: 8884
+client-id: {randomly-generated}
+--> Connect
+--> Subscriptions --> Add new topic subscription
+QoS: 2
+Topic: users/created
+
 ## Configuração
 
 A aplicação lê suas configurações a partir de variáveis de ambiente, com valores padrão para desenvolvimento local definidos no `application.yaml`. Ao rodar via Docker Compose, as configurações de conexão com o banco são fornecidas automaticamente no `docker-compose.yml`, então nenhuma configuração manual é necessária.

@@ -239,12 +239,19 @@ docker compose down -v
 
 Sempre que um usuário for criado via POST request, uma mensagem será publicada no broker: https://www.hivemq.com/demos/websocket-client/
 Config do client
+
 HOST: broker.hivemq.com
+
 PORT: 8884
+
 client-id: {randomly-generated}
+
 --> Connect
+
 --> Subscriptions --> Add new topic subscription
+
 QoS: 2
+
 Topic: users/created
 
 ## Configuração

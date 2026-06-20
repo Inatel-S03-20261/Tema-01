@@ -28,7 +28,7 @@ public class UserController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public void register(@RequestBody UserRegisterDTO dto) {
+    public void register(@RequestBody @Valid UserRegisterDTO dto) {
         PasswordMatchValidator.comparePasswords(dto.password(), dto.confirmPassword());
         User newUser = userMapper.toEntity(dto);
         service.register(newUser);
@@ -52,7 +52,7 @@ public class UserController {
     @PutMapping("/{id}")
     public ResponseEntity<Void> updateCredentials(
             @PathVariable String id,
-            @RequestBody UserUpdateDTO dto
+            @RequestBody @Valid UserUpdateDTO dto
     ) {
 
         var userId = UUID.fromString(id);

@@ -6,6 +6,7 @@ import com.inatel.auth_service.entity.User;
 import com.inatel.auth_service.service.JwtService;
 import com.inatel.auth_service.service.UserService;
 import io.jsonwebtoken.Claims;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,7 +28,7 @@ public class AuthController {
     private final PasswordEncoder passwordEncoder;
 
     @PostMapping("login")
-    public ResponseEntity<TokenDTO> login(@RequestBody LoginRequestDTO dto) {
+    public ResponseEntity<TokenDTO> login(@RequestBody @Valid LoginRequestDTO dto) {
         Optional<User> userOptional = userService.findByUsernameOrEmail(dto.usernameOrEmail());
         if (userOptional.isPresent()) {
             User user = userOptional.get();

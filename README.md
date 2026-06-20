@@ -58,7 +58,7 @@ Neste cenário:
 
 ---
 
-## Como Rodar o Banco de Dados Localmente
+## Como Rodar a Aplicação
 
 ### Pré-requisitos
 
